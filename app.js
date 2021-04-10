@@ -163,23 +163,68 @@ function fetchComments($id) {
 }
 
 function setComment($id) {
-
+ 
     //TODO complete implementation using the product id
-    alert("app.js/setComment() not implemented")
-
+    //alert("app.js/setComment() not implemented")
+    //includes product_id, comment, and score parameter
+ 
+    $.ajax({
+        url: Url+'SetComment',
+        type: 'post',
+        dataType: 'json',
+        data: JSON.stringify({ 'product_id': $id, 'comment': 
+        $('#message-text').val(), 'score': $('#score').val()}),
+ 
+        contentType: 'text/plain',
+        success: function (data) 
+        {
+            alert("Thank you, your comment has been posted.");
+        },
+        error: function (data) 
+        {
+            alert("Error while posting comment.");
+        }
+    });
     //HINT
     //Take note of how the Ajax call in app.js/fetchComments() posts a GET request to corresponding API endpoint.
     //Look at the Microservice API Documentation and find out the appripriate type of request for this action.
-
+ 
 }
-
+ 
 function addToCart($id) {
-
+ 
     //TODO complete implementation using the product id
-    alert("app.js/addToCart() not implemented")
-
-
+    //alert("app.js/addToCart() not implemented")
+    //includes product_id & email parameter
+ 
+    if (email != '') {
+        sessionStorage.setItem('email', email);
+    }else{
+        alert('Please enter in your e-mail address in the task bar at the top of page.')
+        return;
+    }
+ 
+    $.ajax({
+        url: Url+'AddToCart',
+        type: 'post',
+        dataType: 'json',
+        data: JSON.stringify({ "email": email, "product_id": $id }),
+        contentType: 'json',
+ 
+        success: function (data) 
+        {
+            alert("Added to cart.");
+            console.log(data);
+        },
+ 
+        error: function (data) 
+        {
+            alert("There was an issue adding item to cart.");
+            console.error(err);
+        }
+    });
 }
+
 
 function toShoppingCart(){
     let email =$.trim($('#email').val()); //gets the user's email
