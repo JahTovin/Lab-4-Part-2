@@ -168,27 +168,27 @@ function setComment($id) {
     //alert("app.js/setComment() not implemented")
     //includes product_id, comment, and score parameter
  
+    let comment = $.trim($('#message-text').val());
+    let score = $.trim($('#score').val());
+    console.log(comment);
+
     $.ajax({
-        url: Url+'SetComment',
+        url: Url+'SetComment', //API url
         type: 'post',
         dataType: 'json',
-        data: JSON.stringify({ 'product_id': $id, 'comment': 
-        $('#message-text').val(), 'score': $('#score').val()}),
- 
         contentType: 'text/plain',
-        success: function (data) 
-        {
-            alert("Thank you, your comment has been posted.");
+        data: JSON.stringify({"product_id":$id, "comment":comment, "score":score}),
+        success: function (data) {
+            alert("Success!");
         },
-        error: function (data) 
-        {
-            alert("Error while posting comment.");
+        error: function (data) {
+            alert("Error!");
         }
     });
     //HINT
     //Take note of how the Ajax call in app.js/fetchComments() posts a GET request to corresponding API endpoint.
     //Look at the Microservice API Documentation and find out the appripriate type of request for this action.
- 
+
 }
  
 function addToCart($id) {
@@ -197,46 +197,46 @@ function addToCart($id) {
     //alert("app.js/addToCart() not implemented")
     //includes product_id & email parameter
  
-    if (email != '') {
-        sessionStorage.setItem('email', email);
-    }else{
-        alert('Please enter in your e-mail address in the task bar at the top of page.')
-        return;
-    }
- 
+    let email =$.trim($('#email').val()); 
+
     $.ajax({
-        url: Url+'AddToCart',
+        url: Url+'AddToCart', 
         type: 'post',
         dataType: 'json',
-        data: JSON.stringify({ "email": email, "product_id": $id }),
-        contentType: 'json',
- 
-        success: function (data) 
-        {
-            alert("Added to cart.");
-            console.log(data);
+        contentType: 'text/plain',
+        data: JSON.stringify({"product_id":$id, "email":email}),
+        success: function (data) {
+            alert("Success!");
         },
- 
-        error: function (data) 
-        {
-            alert("There was an issue adding item to cart.");
-            console.error(err);
+        error: function (data) {
+            alert("Error!");
         }
+        
     });
+
 }
 
-
 function toShoppingCart(){
-    let email =$.trim($('#email').val()); //gets the user's email
-
-    //email validation
+    let email =$.trim($('#email').val());
 
     if( email !='' ) {
-        sessionStorage.setItem('email', email); //setItem 'email' in sessionStorage to be the user's email. You can access sessionStorage by sessionStorage.getItem().
-        window.location.href = './cart.html'; //redirect to the shopping cart page
+        sessionStorage.setItem('email', email); 
+        window.location.href = './cart.html'; 
     } else {
-        alert("Please enter your email at top of page."); //alert user since email is empty
+        alert("Please enter your email at top of page.");
     }
+}
+
+function returnsOrders(){
+    let email =$.trim($('#email').val());
+
+    if( email !='' ) {
+        sessionStorage.setItem('email', email); 
+        window.location.href = './return.html'; 
+    } else {
+        alert("Please enter your email at top of page.");
+    }
+
 }
 
 $('#exampleModal').on('show.bs.modal', function (event) {

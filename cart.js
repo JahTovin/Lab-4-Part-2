@@ -77,6 +77,7 @@ function checkOut() {
     //TODO complete implementation
     //alert("cart.js/checkOut() is not implemented")
     //includes only email parameter
+    let email =$.trim($('#email').val());
  
     $.ajax({
         url: Url+'Cart',
